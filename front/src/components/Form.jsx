@@ -9,7 +9,7 @@ const Form = () => {
   
     const onAdd = (event) => {
       event.preventDefault();
-  
+      if(state.name === "" || state.name === undefined ) return console.log("No puedes ingresar una cadena vacía")
       const request = {
         name: state.name,
         id: null,
