@@ -1,7 +1,7 @@
 import React, { useContext, useReducer, useEffect, useRef, useState, createContext } from 'react';
 import { Store, initialState, HOST_API } from "../constants/constants";
 
-const List = () => {
+const ListList = () => {
     const { dispatch, state: { todo } } = useContext(Store);
     const currentList = todo.list;
   
@@ -72,6 +72,6 @@ const List = () => {
     </div>
   }
 
-  export default List
+  export default ListList
   
   

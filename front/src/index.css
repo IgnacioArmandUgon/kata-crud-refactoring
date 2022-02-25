@@ -3,6 +3,8 @@ body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    color: rgb(240, 224, 195);
+    background-color: #1a1e21;
 }
 
 code {
@@ -10,8 +12,31 @@ code {
 }
 
 .danger {
-    background: rgba(162, 10, 10, 0.796);
+    background: rgba(124, 10, 10, 0.796);
     color: white;
     border-radius: 5px;
     padding: 5px;
+    font-weight: bolder;
+    width: 71%;
+}
+
+.niceTextInput {
+    padding: 10px;
+    width: 70%;
+    border-radius: 10px;
+}
+
+.niceBtn {
+    padding: 5px;
+    border-radius: 5px;
+    background-color: wheat;
+    margin-left: 10px;
+}
+
+.ancho {
+    width: 4em;
+}
+
+.muyAncho {
+    width: 60%;
 }
