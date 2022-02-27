@@ -8,7 +8,7 @@ import React, {
 } from "react";
 import { Store, HOST_API, initialState } from "../constants/constants";
 
-const Form = () => {
+const Form = ({listId}) => {
   const formRef = useRef(null);
   const {
     dispatch,
@@ -25,6 +25,7 @@ const Form = () => {
       name: state.name,
       id: null,
       completed: false,
+      groupListId: listId
     };
 
     if (state.name !== undefined) {
@@ -60,6 +61,7 @@ const Form = () => {
       name: state.name,
       id: item.id,
       isCompleted: item.isCompleted,
+      groupListId: listId
     };
 
     fetch(HOST_API + "/todo", {
@@ -78,12 +80,13 @@ const Form = () => {
   };
 
   return (
-    <form ref={formRef}>
+    <form ref={formRef} >
       <input
         className="niceTextInput"
         type="text"
         name="name"
-        placeholder="¿Qué piensas hacer hoy?"
+        autoComplete="off"
+        placeholder="¿Que quieres agregar a esta lista?"
         defaultValue={item.name}
         onChange={(event) => {
           setState({ ...state, name: event.target.value });

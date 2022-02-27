@@ -1,12 +1,11 @@
 import React, { useContext, useReducer, useEffect, useRef, useState, createContext } from 'react';
-import { reducer } from '../reducer/reducer';
-import { initialState, Store } from '../constants/constants';
+import { reducerList } from '../reducer/reducerList';
+import { initialStateList, StoreLists } from '../constants/constantsLists';
 
 export const StoreProviderList = ({ children }) => {
-    const [state, dispatch] = useReducer(reducer, initialState);
+    const [state, dispatch] = useReducer(reducerList, initialStateList);
   
-    return <Store.Provider value={{ state, dispatch }}>
+    return <StoreLists.Provider value={{ state, dispatch }}>
       {children}
-    </Store.Provider>
-  
+    </StoreLists.Provider>
   }

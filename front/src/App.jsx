@@ -3,16 +3,15 @@ import Form from './components/Form';
 import List from './components/List';
 import FormList from './components/FormList';
 import ListList from './components/ListList';
-import { StoreProvider } from './storeProvider/StoreProvider';
+import { StoreProviderList } from './storeProvider/storeProviderList';
+import {Store} from "./constants/constants";
 
 function App() {
-  return <StoreProvider>
-    <h1>To-Do List</h1>
+  return <StoreProviderList>
+    <h1>Tus tareas</h1>
     <FormList />
-    <ListList/>
-    <Form />
-    <List />
-  </StoreProvider>
+    <ListList />
+  </StoreProviderList>
 }
 
 export default App;

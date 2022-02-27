@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -18,7 +19,14 @@ import java.util.stream.StreamSupport;
 public class TodoListService {
     @Autowired
     private TodoListRepository todoListRepository;
+    @Autowired
     private TodoRepository todoRepository;
+
+    public TodoList updateListByListId(Long id, TodoListModel todoListModel){
+        TodoList todoListModel1 = todoListRepository.findById(id).get();
+        todoListModel1.setName(todoListModel.getName());
+        return todoListModel1;
+    }
 
     public List<TodoModel> getTodosByListId( Long id){
         return todoListRepository.findById(id)

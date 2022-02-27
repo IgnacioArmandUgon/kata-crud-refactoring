@@ -1,7 +1,8 @@
 import React, { useContext, useReducer, useEffect, useRef, useState, createContext } from 'react';
 import { Store, initialState, HOST_API } from "../constants/constants";
 
-const List = () => {
+
+const List = ({listId}) => {
     const { dispatch, state: { todo } } = useContext(Store);
     const currentList = todo.list;
   
@@ -30,7 +31,8 @@ const List = () => {
       const request = {
         name: todo.name,
         id: todo.id,
-        completed: event.target.checked
+        completed: event.target.checked,
+        groupListId: listId
       };
       fetch(HOST_API + "/todo", {
         method: "PUT",
@@ -52,20 +54,21 @@ const List = () => {
       <table >
         <thead>
           <tr>
-            <td className='ancho'>ID</td>
-            <td className='muyAncho' >Tarea</td>
-            <td className='ancho' >¿Completado?</td>
+            <td className='ancho textoCentrado'>ID</td>
+            <td className='muyAncho textoCentrado' >Tarea</td>
+            <td className='ancho textoCentrado' >¿Completado?</td>
           </tr>
         </thead>
         <tbody>
           {currentList.map((todo) => {
+            if(todo.groupListId == listId ){
             return <tr key={todo.id} style={todo.completed ? decorationDone : {}}>
-              <td>{currentList.indexOf(todo) + 1}</td>
-              <td>{todo.name}</td>
-              <td><input type="checkbox" defaultChecked={todo.completed} onChange={(event) => onChange(event, todo)}></input></td>
-              <td><button className="niceBtn" onClick={() => onDelete(todo.id)}>Eliminar</button></td>
-              <td><button className="niceBtn" onClick={() => onEdit(todo)}>Editar</button></td>
-            </tr>
+              <td className="conBordes textoCentrado">{todo.id}</td>
+              <td className="conBordes textoCentrado">{todo.name}</td>
+              <td className="conBordes textoCentrado"><input type="checkbox" defaultChecked={todo.completed} onChange={(event) => onChange(event, todo)}></input></td>
+              <td className="conBordes textoCentrado" ><button className="niceBtn" onClick={() => onDelete(todo.id)}>Eliminar</button></td>
+              <td className="conBordes textoCentrado"><button className="niceBtn" onClick={() => onEdit(todo)}>Editar</button></td>
+            </tr>}
           })}
         </tbody>
       </table>

@@ -5,6 +5,7 @@ body {
     -moz-osx-font-smoothing: grayscale;
     color: rgb(240, 224, 195);
     background-color: #1a1e21;
+    box-sizing: border-box;
 }
 
 code {
@@ -12,7 +13,7 @@ code {
 }
 
 .danger {
-    background: rgba(124, 10, 10, 0.796);
+    background: linear-gradient(90deg, rgb(124, 10, 10), #1a1e21);
     color: white;
     border-radius: 5px;
     padding: 5px;
@@ -30,7 +31,7 @@ code {
     padding: 5px;
     border-radius: 5px;
     background-color: wheat;
-    margin-left: 10px;
+    margin: 10px;
 }
 
 .ancho {
@@ -38,5 +39,15 @@ code {
 }
 
 .muyAncho {
-    width: 60%;
+    width: 25%;
+}
+
+.conBordes {
+    border-radius: 10px;
+    background-color: #21272b46;
+    padding: 5px;
+}
+
+.textoCentrado {
+    text-align: center;
 }

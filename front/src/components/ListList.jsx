@@ -1,12 +1,16 @@
 import React, { useContext, useReducer, useEffect, useRef, useState, createContext } from 'react';
-import { Store, initialState, HOST_API } from "../constants/constants";
+import { StoreLists, HOST_API, initialStateList } from '../constants/constantsLists';
+import { Store, initialState } from "../constants/constants";
+import Form from './Form';
+import List from "./List";
+import { StoreProvider } from '../storeProvider/StoreProvider';
 
 const ListList = () => {
-    const { dispatch, state: { todo } } = useContext(Store);
-    const currentList = todo.list;
+    const { dispatch, state: { todoList } } = useContext(StoreLists);
+    const currentList = todoList.list;
   
     useEffect(() => {
-      fetch(HOST_API + "/todos")
+      fetch(HOST_API + "/list")
         .then(response => response.json())
         .then((list) => {
           dispatch({ type: "update-list", list })
@@ -15,21 +19,21 @@ const ListList = () => {
   
   
     const onDelete = (id) => {
-      fetch(HOST_API + "/" + id + "/todo", {
+      fetch(HOST_API + "/" + id + "/todoList", {
         method: "DELETE"
       }).then((list) => {
         dispatch({ type: "delete-item", id })
       })
     };
   
-    const onEdit = (todo) => {
-      dispatch({ type: "edit-item", item: todo })
+    const onEdit = (todoList) => {
+      dispatch({ type: "edit-item", item: todoList })
     };
   
-    const onChange = (event, todo) => {
+    const onChange = (event, todoList) => {
       const request = {
-        name: todo.name,
-        id: todo.id,
+        name: todoList.name,
+        id: todoList.id,
         completed: event.target.checked
       };
       fetch(HOST_API + "/todo", {
@@ -40,35 +44,37 @@ const ListList = () => {
         }
       })
         .then(response => response.json())
-        .then((todo) => {
-          dispatch({ type: "update-item", item: todo });
+        .then((todoList) => {
+          dispatch({ type: "update-item", item: todoList });
         });
     };
-  
-    const decorationDone = {
-      textDecoration: 'line-through'
-    };
+
     return <div>
       <table >
         <thead>
           <tr>
-            <td className='ancho'>ID</td>
-            <td className='muyAncho' >Tarea</td>
-            <td className='ancho' >¿Completado?</td>
+            <td className='ancho textoCentrado'>ID</td>
+            <td className='muyAncho textoCentrado' >Nombre de lista</td>
           </tr>
         </thead>
         <tbody>
-          {currentList.map((todo) => {
-            return <tr key={todo.id} style={todo.completed ? decorationDone : {}}>
-              <td>{currentList.indexOf(todo) + 1}</td>
-              <td>{todo.name}</td>
-              <td><input type="checkbox" defaultChecked={todo.completed} onChange={(event) => onChange(event, todo)}></input></td>
-              <td><button className="niceBtn" onClick={() => onDelete(todo.id)}>Eliminar</button></td>
-              <td><button className="niceBtn" onClick={() => onEdit(todo)}>Editar</button></td>
+          {currentList.map((todoList) => {
+            return <tr key={todoList.id} className="conBordes">
+              <td className='textoCentrado'>{todoList.id}</td>
+              <td className='textoCentrado'>{todoList.name}</td>
+
+              <td ><button className="niceBtn" onClick={() => onDelete(todoList.id)}>Eliminar</button></td>
+              <td><button className="niceBtn" onClick={() => onEdit(todoList)}>Editar</button></td>
+              <td><StoreProvider>
+                  <Form listId={todoList.id}/>
+                  <List listId={todoList.id}/>
+                </StoreProvider></td>
+              
             </tr>
           })}
         </tbody>
       </table>
+      
     </div>
   }
 

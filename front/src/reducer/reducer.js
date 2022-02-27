@@ -1,4 +1,4 @@
-export function reducer(state, action) {
+export function reducer(state, action) { //Interaccion ocn el store
     switch (action.type) {
         case 'update-item':
             const todoUpItem = state.todo;

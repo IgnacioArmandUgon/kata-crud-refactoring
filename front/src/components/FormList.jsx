@@ -6,15 +6,16 @@ import React, {
     useState,
     createContext,
   } from "react";
-  import { Store, HOST_API, initialState } from "../constants/constants";
+  import { StoreLists, HOST_API, initialState } from "../constants/constantsLists";
+
   
   const FormList = () => {
     const formRef = useRef(null);
     const {
       dispatch,
-      state: { todo },
-    } = useContext(Store);
-    const item = todo.item;
+      state: { todoList },
+    } = useContext(StoreLists);
+    const item = todoList.item;
     const [state, setState] = useState(item);
   
     const [esVacio, setesVacio] = useState(false);
@@ -29,7 +30,7 @@ import React, {
   
       if (state.name !== undefined) {
         if (state.name.trim().length > 2) {
-          fetch(HOST_API + "/todo", {
+          fetch(HOST_API + "/todolist", {
             method: "POST",
             body: JSON.stringify(request),
             headers: {
@@ -61,8 +62,10 @@ import React, {
         id: item.id,
         isCompleted: item.isCompleted,
       };
+      console.log(request.id);
   
-      fetch(HOST_API + "/todo", {
+      fetch(HOST_API + "/"+ request.id +"/todoList", {
+        
         method: "PUT",
         body: JSON.stringify(request),
         headers: {
@@ -70,8 +73,8 @@ import React, {
         },
       })
         .then((response) => response.json())
-        .then((todo) => {
-          dispatch({ type: "update-item", item: todo });
+        .then((todoList) => {
+          dispatch({ type: "update-item", item: todoList });
           setState({ name: "" });
           formRef.current.reset();
         });
@@ -83,7 +86,7 @@ import React, {
           className="niceTextInput"
           type="text"
           name="name"
-          placeholder="¿Qué piensas hacer hoy?"
+          placeholder="¿Cual será el nombre de tu lista?"
           defaultValue={item.name}
           onChange={(event) => {
             setState({ ...state, name: event.target.value });
