@@ -30,24 +30,7 @@ const ListList = () => {
       dispatch({ type: "edit-item", item: todoList })
     };
   
-    const onChange = (event, todoList) => {
-      const request = {
-        name: todoList.name,
-        id: todoList.id,
-        completed: event.target.checked
-      };
-      fetch(HOST_API + "/todo", {
-        method: "PUT",
-        body: JSON.stringify(request),
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
-        .then(response => response.json())
-        .then((todoList) => {
-          dispatch({ type: "update-item", item: todoList });
-        });
-    };
+    
 
     return <div>
       <table >
@@ -55,6 +38,9 @@ const ListList = () => {
           <tr>
             <td className='ancho textoCentrado'>ID</td>
             <td className='muyAncho textoCentrado' >Nombre de lista</td>
+            <td className='ancho textoCentrado' ></td>
+            <td className='ancho textoCentrado' ></td>
+            <td className='muyMuyAncho textoCentrado' >Nombre de lista</td>
           </tr>
         </thead>
         <tbody>
@@ -65,8 +51,8 @@ const ListList = () => {
 
               <td ><button className="niceBtn" onClick={() => onDelete(todoList.id)}>Eliminar</button></td>
               <td><button className="niceBtn" onClick={() => onEdit(todoList)}>Editar</button></td>
-              <td><StoreProvider>
-                  <Form listId={todoList.id}/>
+              <td className="muyMuyAncho"><StoreProvider>
+                  <Form  listId={todoList.id}/>
                   <List listId={todoList.id}/>
                 </StoreProvider></td>
               

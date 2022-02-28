@@ -35,11 +35,15 @@ code {
 }
 
 .ancho {
-    width: 4em;
+    width: 3em;
 }
 
 .muyAncho {
     width: 25%;
+}
+
+.muyMuyAncho {
+    width: 500px;
 }
 
 .conBordes {

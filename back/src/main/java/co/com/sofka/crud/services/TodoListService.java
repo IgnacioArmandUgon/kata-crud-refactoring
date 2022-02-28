@@ -2,8 +2,8 @@ package co.com.sofka.crud.services;
 
 import co.com.sofka.crud.model.Todo;
 import co.com.sofka.crud.model.TodoList;
-import co.com.sofka.crud.model.TodoListModel;
-import co.com.sofka.crud.model.TodoModel;
+import co.com.sofka.crud.model.TodoListDTO;
+import co.com.sofka.crud.model.TodoDTO;
 import co.com.sofka.crud.repository.TodoListRepository;
 import co.com.sofka.crud.repository.TodoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -22,20 +21,19 @@ public class TodoListService {
     @Autowired
     private TodoRepository todoRepository;
 
-    public TodoList updateListByListId(Long id, TodoListModel todoListModel){
-        TodoList todoListModel1 = todoListRepository.findById(id).get();
-        todoListModel1.setName(todoListModel.getName());
-        return todoListModel1;
-    }
-
-    public List<TodoModel> getTodosByListId( Long id){
+    /**
+     * Recibe un ID de todoList y devuelve todos los Todos que esta contenga
+     * @param id
+     * @return
+     */
+    public List<TodoDTO> getTodosByListId(Long id){
         return todoListRepository.findById(id)
                 .orElseThrow()
                 .getTodos().stream()
-                .map(item -> new TodoModel(item.getId(), item.getName(), item.isCompleted(), id ))
+                .map(item -> new TodoDTO(item.getId(), item.getName(), item.isCompleted(), id ))
                 .collect(Collectors.toList());
     }
-    public TodoModel addNewTodoByListId(Long listId, TodoModel todoModel){
+    public TodoDTO addNewTodoByListId(Long listId, TodoDTO todoModel){
         var listTodo = todoListRepository.findById(listId)
                 .orElseThrow();
         var todo = new Todo();
@@ -57,7 +55,7 @@ public class TodoListService {
                 return todoModel;
     }
 
-    public TodoModel updateTodoByListId(Long listId, TodoModel todoModel){
+    public TodoDTO updateTodoByListId(Long listId, TodoDTO todoModel){
         var listTodo = todoListRepository.findById(listId)
                 .orElseThrow();
         for(var item: listTodo.getTodos()){
@@ -72,7 +70,7 @@ public class TodoListService {
         return todoModel;
     }
 
-    public TodoListModel newListTodo(TodoListModel todoListModel){
+    public TodoListDTO newListTodo(TodoListDTO todoListModel){
         var listTodo = new TodoList();
         listTodo.setName(todoListModel.getName());
         var id = todoListRepository.save(listTodo).getId();
@@ -80,15 +78,15 @@ public class TodoListService {
         return todoListModel;
     }
 
-    public List<TodoListModel> getAllListTodo(){
+    public List<TodoListDTO> getAllListTodo(){
         return StreamSupport
                 .stream(todoListRepository.findAll().spliterator(), false)
                 .map(todoList -> {
                     var listDto = todoList.getTodos()
                             .stream()
-                            .map(item -> new TodoModel(item.getId(), item.getName(), item.isCompleted(), todoList.getId()))
+                            .map(item -> new TodoDTO(item.getId(), item.getName(), item.isCompleted(), todoList.getId()))
                             .collect(Collectors.toList());
-                        return new TodoListModel(todoList.getId(), todoList.getName(), listDto);
+                        return new TodoListDTO(todoList.getId(), todoList.getName(), listDto);
                         })
                 .collect(Collectors.toList());
     }
@@ -103,4 +101,18 @@ public class TodoListService {
         var todo = todoRepository.findById(id).orElseThrow();
         todoRepository.delete(todo);
     }
+    public void delete(Long listId){
+        TodoList todoList = todoListRepository.findById(listId).orElseThrow();
+        List<Todo> aborrar = (List<Todo>) todoRepository.getByGroupListId(listId);
+
+        // si no esta vacio el grupo borrar los todos
+        if (!aborrar.isEmpty()){
+            aborrar.forEach(todo -> {
+                todoRepository.delete(todo);
+            });
+        }
+
+        todoListRepository.delete(todoList);
+    }
+
 }

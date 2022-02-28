@@ -1,17 +1,15 @@
 package co.com.sofka.crud.model;
 
-import javax.persistence.CascadeType;
-import javax.persistence.OneToMany;
 import java.util.List;
 
-public class TodoListModel {
+public class TodoListDTO {
     private Long id;
     private String name;
-    private List<TodoModel> todos;
+    private List<TodoDTO> todos;
 
-    public TodoListModel(){};
+    public TodoListDTO(){}
 
-    public TodoListModel(Long id, String name, List<TodoModel> todos) {
+    public TodoListDTO(Long id, String name, List<TodoDTO> todos) {
         this.id = id;
         this.name = name;
         this.todos = todos;
@@ -33,11 +31,11 @@ public class TodoListModel {
         this.name = name;
     }
 
-    public List<TodoModel> getTodos() {
+    public List<TodoDTO> getTodos() {
         return todos;
     }
 
-    public void setTodos(List<TodoModel> todos) {
+    public void setTodos(List<TodoDTO> todos) {
         this.todos = todos;
     }
 }

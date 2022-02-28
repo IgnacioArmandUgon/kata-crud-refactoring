@@ -1,14 +1,14 @@
 package co.com.sofka.crud.model;
 
-public class TodoModel {
+public class TodoDTO {
     private Long id;
     private String name;
     private boolean completed;
     private Long ListId;
 
-    public TodoModel(){}
+    public TodoDTO(){}
 
-    public TodoModel(Long id, String name, boolean completed, Long listId) {
+    public TodoDTO(Long id, String name, boolean completed, Long listId) {
         this.id = id;
         this.name = name;
         this.completed = completed;

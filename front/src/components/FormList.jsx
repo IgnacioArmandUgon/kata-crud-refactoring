@@ -24,8 +24,7 @@ import React, {
       event.preventDefault();
       const request = {
         name: state.name,
-        id: null,
-        completed: false,
+        id: null
       };
   
       if (state.name !== undefined) {
@@ -59,10 +58,9 @@ import React, {
   
       const request = {
         name: state.name,
-        id: item.id,
-        isCompleted: item.isCompleted,
+        id: item.id
       };
-      console.log(request.id);
+      console.log(event);
   
       fetch(HOST_API + "/"+ request.id +"/todoList", {
         

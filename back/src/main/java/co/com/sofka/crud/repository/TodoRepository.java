@@ -4,4 +4,5 @@ import co.com.sofka.crud.model.Todo;
 import org.springframework.data.repository.CrudRepository;
 
 public interface TodoRepository extends CrudRepository<Todo, Long> {
+    public Iterable<Todo> getByGroupListId(Long id);
 }
